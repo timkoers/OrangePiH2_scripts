@@ -274,13 +274,13 @@ fi
 
 echo "======================="
 echo "Updating & upgrading..."
-apt-get ${_apt} update  &
+apt ${_apt} update  &
 pid=$!
 proc_wait $pid "please wait"
-apt-get ${_apt} upgrade  &
+apt ${_apt} upgrade  &
 pid=$!
 proc_wait $pid "please wait"
-apt-get clean 
+apt clean 
 
 # ============================================
 # prevent services from starting automatically
@@ -294,10 +294,10 @@ chmod 0755 /usr/sbin/policy-rc.d
 #---------------------------------------------
 
 echo "Installing essential packages..."
-apt-get ${_apt} install lsb-release  &
+apt ${_apt} install lsb-release  &
 pid=$!
 proc_wait $pid "please be patient"
-apt-get clean 
+apt clean 
 
 
 _DST=`lsb_release -si`
@@ -306,41 +306,41 @@ echo ""
 echo -e "\033[31m\033[1m*** Installing $_DST $_REL ***\033[22m\033[37m"
 echo ""
 
-#apt-get ${_apt} install udev policykit-1 >> $_LOGFILE 2>&1 &
+#apt ${_apt} install udev policykit-1 >> $_LOGFILE 2>&1 &
 #pid=$!
 #proc_wait $pid "please wait"
-#apt-get clean >> $_LOGFILE 2>&1
+#apt clean >> $_LOGFILE 2>&1
 
 #if [ "${_REL}" = "vivid" ] ; then
 #    echo "Installing upstart-sysv (vivid)..."
-#    apt-get ${_apt} install upstart-sysv >> $_LOGFILE 2>&1 &
+#    apt ${_apt} install upstart-sysv >> $_LOGFILE 2>&1 &
 #    pid=$!
 #    proc_wait $pid "please wait"
-#    apt-get clean >> $_LOGFILE 2>&1
+#    apt clean >> $_LOGFILE 2>&1
 #fi
 
 
 if [ "${ONLY_BASE}" = "yes" ] ; then
     echo "Installing base packages..."
-    apt-get ${_apt} install sudo isc-dhcp-client netbase ifupdown iproute network-manager --no-install-recommends  &
+    apt ${_apt} install sudo isc-dhcp-client netbase ifupdown iproute network-manager --no-install-recommends  &
     pid=$!
     proc_wait $pid "please be patient"
-    apt-get clean 
+    apt clean 
     
 else
     echo "Installing base packages..."
-    apt-get ${_apt} install udev apt-utils locales dialog sudo isc-dhcp-client netbase ifupdown iproute openssh-server iputils-ping wget curl ntpdate ntp less tzdata console-common module-init-tools u-boot-tools initramfs-tools keyboard-configuration console-setup xz-utils fbset --no-install-recommends  &
+    apt ${_apt} install udev apt-utils locales dialog sudo isc-dhcp-client netbase ifupdown iproute openssh-server iputils-ping wget curl ntpdate ntp less tzdata console-common module-init-tools u-boot-tools initramfs-tools keyboard-configuration console-setup xz-utils fbset --no-install-recommends  &
     pid=$!
     proc_wait $pid "please be patient"
-    apt-get clean 
+    apt clean 
 
     # ** INSTALL base language pack for your language
     if [ "${_DST}" = "Ubuntu" ] ; then
 	echo "Installing language pack..."
-	apt-get ${_apt} install language-pack-$LANGUAGE-base --no-install-recommends  &
+	apt ${_apt} install language-pack-$LANGUAGE-base --no-install-recommends  &
 	pid=$!
 	proc_wait $pid "please wait"
-	apt-get clean 
+	apt clean 
     else
 	cat /etc/locale.gen | sed s/"# $LANG"/"$LANG"/g > /tmp/locale.gen
 	mv /tmp/locale.gen /etc/locale.gen
@@ -348,12 +348,12 @@ else
     fi
 
     # ** INSTALL more usefull packages ....
-    # apt-get -y install wireless-tools wpasupplicant axel build-essential git whiptail unzip
+    # apt -y install wireless-tools wpasupplicant axel build-essential git whiptail unzip
     echo "Installing more packages..."
-    apt-get ${_apt} install nano mc htop man-db tmux dbus btrfs-tools net-tools ethtool uuid iw lshw network-manager rsync usbutils hdparm i2c-tools parted dosfstools --no-install-recommends  &
+    apt ${_apt} install nano mc htop man-db tmux dbus btrfs-tools net-tools ethtool uuid iw lshw network-manager rsync usbutils hdparm i2c-tools parted dosfstools --no-install-recommends  &
     pid=$!
     proc_wait $pid "please wait"
-    apt-get clean 
+    apt clean 
 fi
 
 rm -Rf /boot/* 
