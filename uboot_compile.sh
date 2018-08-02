@@ -39,7 +39,7 @@ if [ "${1}" = "zero" ]; then
 	make $CONFIG > /dev/null 2>&1
 	echo " Build u-boot..."
     echo -e "\e[1;31m Build U-boot \e[0m"
-	make -j4 ARCH=arm CROSS_COMPILE=${cross_comp}-
+	make -j 4 ARCH=arm CROSS_COMPILE=${cross_comp}-
 	if [ ! -d $TOP/output/ ]; then
 		mkdir -p $TOP/output
 	fi
